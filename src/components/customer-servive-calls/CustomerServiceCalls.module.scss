@@ -1,0 +1,54 @@
+.customer-service-calls-wrapper :global{
+  margin-top: 86px;
+  .strip-separator {
+    height: 90px;
+    background-color: #5fa0d6;
+  }
+  .my-calls-title{
+    font-size: 38px;
+    font-weight: 500;
+    color: #041e4b;
+    margin-top: 62px;
+  }
+  .my-calls-list{
+    margin-top: 31px;
+    .accordion__item{
+      cursor: pointer;
+    }
+  }
+  .service-call-item{
+    max-width: 1245px;
+    height: 210px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 5px 0 rgba(0, 56, 152, 0.3);
+  }
+  .accordion{
+    max-width: 1245px;
+    border: none;
+  }
+  .category-logo-wrapper{
+    width: 313px;
+    background: #041e4b;
+    .category-logo{
+      border-radius: 0 15px 15px 0;
+    }
+  }
+  .service-call-details{
+    padding: 54px 50px 39px 40px;
+    .sub-category{
+      font-size: 24px;
+      color: #041e4b;
+    }
+    .category-name{
+      font-size: 18px;
+      font-weight: bold;
+      color: #041e4b;
+    }
+    .call-date-time{
+      font-size: 24px;
+      font-weight: 300;
+      color: #041e4b;
+    }
+  }
+}

@@ -1,0 +1,93 @@
+.header :global{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  background:rgba(255,255,255, 0.6);
+  a{
+    text-align: right;
+    font-size: 18px;
+  }
+  .btn{
+    border: none;
+  }
+  .btn-default,
+  .btn-default:hover,
+  .btn-default:focus,
+  .btn-default:active{
+    background-color: transparent;
+    border-color: transparent;
+  }
+  .btn-group.open .dropdown-toggle,
+  .btn-group.open .dropdown-toggle:active,
+  .btn-group.open .dropdown-toggle:focus {
+    box-shadow: none;
+  }
+  .main-menu{
+    ul{
+      background: #fff;
+      opacity: 0.8;
+      .divider{
+        color: #dee6ef;
+        height: 4px;
+      }
+    }
+    a{
+      color: #041e4b!important;
+    }
+  }
+  .btn-group .dropdown-toggle:active, .btn-group.open .dropdown-toggle {
+    outline: 0;
+    background: transparent!important;
+    border: none;
+  }
+  .btn{
+    padding: 0;
+  }
+  .icon-bar {
+    background: #042e4b !important;
+    width: 39px;
+    height: 7px;
+    margin-bottom: 8px;
+  }
+  .personal-info{
+    color: #041e4b;
+  }
+  .sub-menu{
+    min-width: 163px;
+    .dropdown-menu{
+      background: #5fa0d6;
+      opacity: 0.9;
+    }
+    button#sub-menu{
+      font-size: 18px;
+      color: #041e4b;
+    }
+    a{
+      color: #fff;
+    }
+    a:hover{
+      text-decoration: none;
+      opacity: 0.6;
+    }
+  }
+  .personal-area{
+    font-size: 18px;
+    color: #041e4b;
+    text-align: left;
+  }
+  .language-bar{
+    color: #5fa0d6;
+    font-weight: bold;
+    font-size: 18px;
+    div{
+      cursor: pointer;
+    }
+    .ru{
+      border-right: 1px solid #5fa0d6;
+      border-left: 1px solid #5fa0d6;
+      padding: 0 7px;
+      height: 17px;
+    }
+  }
+}
