@@ -4,6 +4,7 @@ import './App.module.scss';
 import {Link, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import Home from "./components/home/Home";
 import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 
 
 
@@ -29,6 +30,7 @@ class App extends Component {
 
 
                 </Switch>
+                <Footer />
             </div>
         );
     }

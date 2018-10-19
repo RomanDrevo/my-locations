@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Grid, Modal, Row} from 'react-bootstrap';
+import {Button, Col, Glyphicon, Grid, Modal, Row} from 'react-bootstrap';
 import './Home.module.scss'
 import Footer from "../../components/footer/Footer"
 import {inject, observer} from "mobx-react/index";
@@ -42,6 +42,7 @@ class Home extends Component {
     componentDidMount() {
         const {categoriesStore} = this.props
     }
+    
 
     render() {
         const {categoriesStore} = this.props
@@ -65,7 +66,12 @@ class Home extends Component {
 
 
                                     <Col className="flex justify-end" xs={12}>
-                                        <button onClick={categoriesStore.openCreateNewCategoryModal}>Add Category</button>
+                                        <Button
+                                            className="flex flex-column"
+                                            bsStyle="primary" onClick={categoriesStore.openCreateNewCategoryModal}>
+                                            <Glyphicon glyph="plus" />
+                                            <span className="ml1">ADD CATEGORY</span>
+                                        </Button>
                                     </Col>
                                 </Col>
 

@@ -11,7 +11,7 @@ class Footer extends ResponsiveComponent {
         return (
             <Grid fluid className="footer" >
                 <Row>
-                   <div className="flex justify-center">תפריט: טקסט טקסט טקסט</div>
+                    <div className="flex justify-center">Text</div>
                 </Row>
             </Grid>
         );
