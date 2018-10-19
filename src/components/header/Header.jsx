@@ -30,6 +30,8 @@ class Header extends ResponsiveComponent {
                             <MenuItem eventKey="1" onClick={()=> history.push('/')}>Home</MenuItem>
                             <MenuItem divider/>
                             <MenuItem eventKey="2" onClick={()=> history.push('/categories')}>Categories</MenuItem>
+                            <MenuItem divider/>
+                            <MenuItem eventKey="3" onClick={()=> history.push('/locations')}>Locations</MenuItem>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>

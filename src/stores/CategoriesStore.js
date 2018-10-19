@@ -13,9 +13,9 @@ export default class CategoriesStore {
     @observable isUpdateCategoryModalOpen = false;
 
 
-    constructor(apiGateway) {
-        this._apiGateway = apiGateway;
-    }
+    // constructor(apiGateway) {
+    //     this._apiGateway = apiGateway;
+    // }
 
     @action
     openDeleteSwal = (index) => {

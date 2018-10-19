@@ -6,8 +6,6 @@ import './Footer.module.scss'
 class Footer extends ResponsiveComponent {
 
     renderDesktop() {
-        const {} = this.props
-
         return (
             <Grid fluid className="footer" >
                 <Row>

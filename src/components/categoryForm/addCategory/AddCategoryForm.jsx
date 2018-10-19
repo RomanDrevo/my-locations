@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ResponsiveComponent from "../../../framework/components/ResponsiveComponent";
 import '../CategoryForm.scss'
 import {inject, observer} from "mobx-react/index";
 import {Button, FormControl, FormGroup} from "react-bootstrap";
 
 
-@inject('categoriesStore', 'addCategoryFormUiState')
+@inject('addCategoryFormUiState')
 
 @observer
 class AddCategoryForm extends ResponsiveComponent {
 
     renderDesktop() {
-        const {categoriesStore, addCategoryFormUiState} = this.props
+        const {addCategoryFormUiState} = this.props
         const {form} = addCategoryFormUiState
 
         return (
@@ -24,7 +24,6 @@ class AddCategoryForm extends ResponsiveComponent {
                         <FormControl
                             {...form.$('categoryName').bind()}
                         />
-                        {/*<input className="ml1"  />*/}
                         <p className="error">{form.$('categoryName').error}</p>
                     </div>
 
@@ -41,8 +40,6 @@ class AddCategoryForm extends ResponsiveComponent {
     }
 
     renderMobile() {
-        const {} = this.props
-
         return (
             <div>
                 mobile form

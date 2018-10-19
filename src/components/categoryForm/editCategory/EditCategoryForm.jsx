@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ResponsiveComponent from "../../../framework/components/ResponsiveComponent";
 import '../CategoryForm.scss'
 import {inject, observer} from "mobx-react/index";
@@ -30,7 +30,6 @@ class EditCategoryForm extends ResponsiveComponent {
                         <FormControl
                             {...form.$('categoryName').bind()}
                         />
-                        {/*<input className="ml1"  />*/}
                         <p className="error">{form.$('categoryName').error}</p>
                     </div>
 
@@ -47,8 +46,6 @@ class EditCategoryForm extends ResponsiveComponent {
     }
 
     renderMobile() {
-        const {} = this.props
-
         return (
             <div>
                 mobile form
