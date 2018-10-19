@@ -103,6 +103,7 @@ export default class CategoriesStore {
     deleteCategory = () =>{
         this.categories.splice(this.selectedCategory, 1)
         localStorage.setItem('categories', JSON.stringify(this.categories));
+        this.closeDeleteSwal()
     }
 
     @action

@@ -62,22 +62,9 @@ class Categories extends Component {
                     text=""
                     onConfirm={categoriesStore.deleteCategory}
                     cancelButtonText="No, keep it"
-                    onCancel={()=>console.log('canceled')}
+                    onCancel={categoriesStore.closeDeleteSwal}
                 />
 
-                {/*<SweetAlert*/}
-                    {/*show={true}*/}
-                    {/*warning*/}
-                    {/*showCancel*/}
-                    {/*cancelButtonText="Cancel!!!"*/}
-                    {/*confirmBtnBsStyle="danger"*/}
-                    {/*cancelBtnBsStyle="default"*/}
-                    {/*title="Are you sure?11"*/}
-                    {/*onConfirm={()=>console.log('canceled')}*/}
-                    {/*onCancel={()=>console.log('canceled')}*/}
-                {/*>*/}
-                    {/*You will not be able to recover this imaginary file!*/}
-                {/*</SweetAlert>*/}
 
                 <Col xs={4}>
                     <ListGroup className="mt3">
