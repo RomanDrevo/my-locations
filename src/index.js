@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'muicss/dist/css/mui.css'
 import 'muicss/dist/js/mui'
 import bootstrapper from './bootstrapper';
+import 'sweetalert/dist/sweetalert.css'
 
 
 const injectables = bootstrapper();

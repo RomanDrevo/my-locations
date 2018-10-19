@@ -1,10 +1,8 @@
 import React from 'react';
 import './Header.module.scss'
 import ResponsiveComponent from "../../framework/components/ResponsiveComponent";
-import {Dropdown, FormControl, MenuItem, Nav, Navbar, NavItem} from "react-bootstrap";
-// import {Link} from "react-router-dom";
-// import {DropdownItem, Dropdown, Button, Divider} from "muicss/react";
-// import Auth from '../../Auth'
+import {Dropdown, MenuItem} from "react-bootstrap";
+
 
 import {withRouter} from "react-router-dom";
 
@@ -12,18 +10,12 @@ import {withRouter} from "react-router-dom";
 
 class Header extends ResponsiveComponent {
 
-    onToggle = () => {
-        // console.log('toggle...')
-    }
     componentDidMount(){
-        // Promise.resolve(homeUiState.fetchUser()).then(()=>{
-        //     this.setState({user: homeUiState.user})
-        // })
+
     }
 
     renderDesktop() {
         const {history} = this.props
-
 
         return (
             <div className="header pt2 pb2">
@@ -37,17 +29,11 @@ class Header extends ResponsiveComponent {
                         <Dropdown.Menu className="super-colors">
                             <MenuItem eventKey="1" onClick={()=> history.push('/')}>Home</MenuItem>
                             <MenuItem divider/>
-                            <MenuItem eventKey="2">About</MenuItem>
-                            <MenuItem divider/>
-                            {/*<MenuItem eventKey="3" onClick={signupFormUiState.openSignUpModal}>הרשמה</MenuItem>*/}
+                            <MenuItem eventKey="2" onClick={()=> history.push('/categories')}>Categories</MenuItem>
                         </Dropdown.Menu>
                     </Dropdown>
-
-
                 </div>
-
             </div>
-
         );
     }
 

@@ -21,11 +21,12 @@ const fields = [
 
 
 export default class CategoriesStore {
-    @observable categories = JSON.parse(localStorage.getItem('categories'));
-    @observable categoriesForDesktop = [];
+    @observable categories = JSON.parse(localStorage.getItem('categories')) || [];
+    @observable isDeleteSwalOpen = false;
     @observable isLoadingCategories = false;
     @observable loadCategoriesError = null;
     @observable isCreateNewCategoryModalOpen = false;
+    @observable selectedCategory = null;
 
 
     constructor(apiGateway) {
@@ -63,6 +64,17 @@ export default class CategoriesStore {
     }
 
     @action
+    openDeleteSwal = (index) => {
+        this.selectedCategory = index
+        this.isDeleteSwalOpen = true
+    }
+
+    @action
+    closeDeleteSwal = () => {
+        this.isDeleteSwalOpen = false
+    }
+
+    @action
     async loadCategories() {
         this.isLoadingCategories = true;
 
@@ -81,12 +93,16 @@ export default class CategoriesStore {
 
     @action
     _createCategory = () => {
-        console.log('formValues: ', this.form.values())
-        // this.categories = JSON.parse(localStorage.getItem('categories'));
-        this.categories.push(this.form.values().categoryName);
+        this.categories.unshift(this.form.values().categoryName);
         localStorage.setItem('categories', JSON.stringify(this.categories));
         this.closeCreateNewCategoryModal()
         this.form.clear()
+    }
+
+    @action
+    deleteCategory = () =>{
+        this.categories.splice(this.selectedCategory, 1)
+        localStorage.setItem('categories', JSON.stringify(this.categories));
     }
 
     @action

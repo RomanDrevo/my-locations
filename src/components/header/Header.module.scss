@@ -5,7 +5,6 @@
   z-index: 10;
   background:rgba(255,255,255, 0.6);
   a{
-    text-align: right;
     font-size: 18px;
   }
   .btn{
@@ -26,7 +25,6 @@
   .main-menu{
     ul{
       background: #fff;
-      opacity: 0.8;
       .divider{
         color: #dee6ef;
         height: 4px;
@@ -69,25 +67,6 @@
     a:hover{
       text-decoration: none;
       opacity: 0.6;
-    }
-  }
-  .personal-area{
-    font-size: 18px;
-    color: #041e4b;
-    text-align: left;
-  }
-  .language-bar{
-    color: #5fa0d6;
-    font-weight: bold;
-    font-size: 18px;
-    div{
-      cursor: pointer;
-    }
-    .ru{
-      border-right: 1px solid #5fa0d6;
-      border-left: 1px solid #5fa0d6;
-      padding: 0 7px;
-      height: 17px;
     }
   }
 }
