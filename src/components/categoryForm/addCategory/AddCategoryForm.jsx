@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
-import ResponsiveComponent from "../../framework/components/ResponsiveComponent";
-import './CategoryForm.scss'
+import ResponsiveComponent from "../../../framework/components/ResponsiveComponent";
+import '../CategoryForm.scss'
 import {inject, observer} from "mobx-react/index";
 import {Button, FormControl, FormGroup} from "react-bootstrap";
 
 
-@inject('categoriesStore')
+@inject('categoriesStore', 'addCategoryFormUiState')
 
 @observer
-class CategoryForm extends ResponsiveComponent {
+class AddCategoryForm extends ResponsiveComponent {
 
     renderDesktop() {
-        const {categoriesStore} = this.props
-        const {form} = categoriesStore
+        const {categoriesStore, addCategoryFormUiState} = this.props
+        const {form} = addCategoryFormUiState
 
         return (
             <form id="category-form" className="category-form" onSubmit={form.onSubmit}>
@@ -52,4 +52,4 @@ class CategoryForm extends ResponsiveComponent {
 
 }
 
-export default CategoryForm;
+export default AddCategoryForm;

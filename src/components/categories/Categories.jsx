@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {Button, Col, Glyphicon, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
 import {inject, observer} from "mobx-react/index";
-import CategoryForm from "../categoryForm/CategoryForm";
+import AddCategoryForm from "../categoryForm/addCategory/AddCategoryForm";
 import './Categories.module.scss'
 import SweetAlert from 'sweetalert2-react';
+import EditCategoryForm from "../categoryForm/editCategory/EditCategoryForm";
 
 class AddCategoryModal extends Component {
-
     render() {
         return (
             <Modal
@@ -18,7 +18,29 @@ class AddCategoryModal extends Component {
                     <Modal.Title id="contained-modal-title-lg">Add New Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="flex justify-center">
-                    <CategoryForm/>
+                    <AddCategoryForm/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={this.props.onHide}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+}
+
+class EditCategoryModal extends Component {
+    render() {
+        return (
+            <Modal
+                {...this.props}
+                bsSize="large"
+                aria-labelledby="contained-modal-title-lg"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-lg">Edit Category</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="flex justify-center">
+                    <EditCategoryForm />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.props.onHide}>Close</Button>
@@ -54,6 +76,11 @@ class Categories extends Component {
                     onHide={categoriesStore.closeCreateNewCategoryModal}
                 />
 
+                <EditCategoryModal
+                    show={categoriesStore.isUpdateCategoryModalOpen}
+                    onHide={categoriesStore.closeUpdateCategoryModal}
+                />
+
                 <SweetAlert
                     warning
                     showCancelButton={true}
@@ -72,7 +99,7 @@ class Categories extends Component {
                             categoriesStore.categories.map((category, index) =>
                                 <ListGroupItem key={index} className="">
                                     <div className="category">{category}</div>
-                                    <Button bsStyle="success" className="mr2">
+                                    <Button onClick={() => categoriesStore.openUpdateCategoryModal(index)} bsStyle="success" className="mr2">
                                         <Glyphicon glyph="edit"/>
                                         <span className="ml1">EDIT</span>
                                     </Button>
