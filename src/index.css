@@ -45,8 +45,7 @@ label {
 }
 .close {
     position: absolute;
-    left: 15px;
-    order: 1;
+    right: 15px;
     color: #fff !important;
     float: none !important;
     opacity: 1 !important;
@@ -56,13 +55,6 @@ label {
 }
 .pointer {
     cursor: pointer;
-}
-
-.kep-login-facebook,
-.kep-login-facebook.metro{
-    padding: 8px 12px;
-    margin-top: 10px;
-    border-radius: 4px!important;
 }
 .full-width{
     width: 100%;

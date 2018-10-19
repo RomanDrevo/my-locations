@@ -5,11 +5,11 @@ import Footer from "../../components/footer/Footer"
 import {inject, observer} from "mobx-react/index";
 import loader from '../../assets/images/loading.svg'
 import Category from "../category/Category";
-import ServiceCallForm from "../serviceCallForm/ServiceCallForm";
+import CategoryForm from "../categoryForm/CategoryForm";
 import ProfessionalForm from "../professionalForm/ProfessionalForm";
 
 
-class ServiceCallModal extends Component {
+class AddCategoryModal extends Component {
 
     render() {
         return (
@@ -19,13 +19,13 @@ class ServiceCallModal extends Component {
                 aria-labelledby="contained-modal-title-lg"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-lg">קריאת שרות</Modal.Title>
+                    <Modal.Title id="contained-modal-title-lg">Add New Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="flex justify-center">
-                    {/*<ServiceCallForm/>*/}
+                    <CategoryForm/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.props.onHide}>סגור</Button>
+                    <Button onClick={this.props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
         );
@@ -59,7 +59,7 @@ class Home extends Component {
 
                                 <Col xs={10}>
                                     <Col className="mb3" xs={12}>
-                                        <div className="categories-title">תחומים ראשיים</div>
+                                        <div className="categories-title">Categories</div>
                                     </Col>
 
 
@@ -72,7 +72,7 @@ class Home extends Component {
                             </Row>
                         </Grid>
 
-                <ServiceCallModal show={categoriesStore.isCreateNewCategoryModalOpen} onHide={categoriesStore.closeCreateNewCategoryModal}/>
+                <AddCategoryModal show={categoriesStore.isCreateNewCategoryModalOpen} onHide={categoriesStore.closeCreateNewCategoryModal}/>
 
 
                 {/*<Footer/>*/}

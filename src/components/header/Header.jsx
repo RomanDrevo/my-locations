@@ -35,9 +35,9 @@ class Header extends ResponsiveComponent {
                             <div className="icon-bar"/>
                         </Dropdown.Toggle>
                         <Dropdown.Menu className="super-colors">
-                            <MenuItem eventKey="1" onClick={()=> history.push('/')}>דף הבית</MenuItem>
+                            <MenuItem eventKey="1" onClick={()=> history.push('/')}>Home</MenuItem>
                             <MenuItem divider/>
-                            <MenuItem eventKey="2">אודות</MenuItem>
+                            <MenuItem eventKey="2">About</MenuItem>
                             <MenuItem divider/>
                             {/*<MenuItem eventKey="3" onClick={signupFormUiState.openSignUpModal}>הרשמה</MenuItem>*/}
                         </Dropdown.Menu>
