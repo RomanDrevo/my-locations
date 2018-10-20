@@ -34,17 +34,6 @@ class AddLocationModal extends Component {
 @observer
 class Locations extends Component {
 
-    state = {
-        data: null
-    }
-
-    // componentDidMount(){
-    //     const {locationsStore} = this.props
-    //     Promise.resolve(locationsStore.loadLocations())
-    //         .then(()=> this.setState({data: locationsStore.locations}))
-    //
-    // }
-
     renderEditable = (cellInfo) => {
         // console.log('cellInfo: ', cellInfo)
         const {locationsStore} = this.props
@@ -105,21 +94,49 @@ class Locations extends Component {
                                     {
                                         Header: "Longitude",
                                         accessor: "longitude",
-                                        Cell: this.renderEditable
+                                        Cell: this.renderEditable,
+                                        sortMethod: (a, b) => {
+                                            if (a.length === b.length) {
+                                                return a > b ? 1 : -1;
+                                            }
+                                            return a.length > b.length ? 1 : -1;
+                                        }
                                     },
                                     {
                                         Header: "Latitude",
+                                        Cell: this.renderEditable,
                                         accessor: "latitude",
-                                        Cell: this.renderEditable
+                                        sortMethod: (a, b) => {
+                                            if (a.length === b.length) {
+                                                return a > b ? 1 : -1;
+                                            }
+                                            return a.length > b.length ? 1 : -1;
+                                        }
+
                                     },
                                     {
                                         Header: "Category",
                                         accessor: "category",
                                         Cell: this.renderEditable
+                                    },
+                                    {
+                                        // Header: "Remove",
+                                        maxWidth: 40,
+                                        Cell:  <Button
+                                                    bsStyle="danger"
+                                                    bsSize="xsmall"
+                                                    // onClick={() => locationsStore.deleteLocation(cellInfo.index)}
+                                                >
+                                                    <Glyphicon glyph="trash"/>
+                                                </Button>
                                     }
                                 ]}
+                                // defaultSorted={[
+                                //     { id: "latitude", desc: true }
+                                // ]}
                                 defaultPageSize={10}
                                 className="-striped -highlight"
+                                sortable={true}
                             />
 
 

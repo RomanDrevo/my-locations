@@ -61,17 +61,6 @@ export default class LocationsStore {
     //     this.isDeleteSwalOpen = false
     // }
 
-
-
-
-
-
-    // _updateCategory = (category) =>{
-    //     this.categories[this.selectedCategory] = category
-    //     localStorage.setItem('categories', JSON.stringify(this.categories));
-    //     this.closeUpdateCategoryModal()
-    // }
-    //
     // @action
     // deleteCategory = () =>{
     //     this.categories.splice(this.selectedCategory, 1)
