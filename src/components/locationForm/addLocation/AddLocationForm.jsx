@@ -65,7 +65,7 @@ class AddLocationForm extends ResponsiveComponent {
                         <Select
                             {...form.$('category').bind()}
                             options={categoriesStore.transformedCategories}
-                            isMulti
+                            isMulti={false}
                         />
                         <p className="error">{form.$('category').error}</p>
                     </div>

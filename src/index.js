@@ -11,7 +11,7 @@ import 'muicss/dist/css/mui.css'
 import 'muicss/dist/js/mui'
 import bootstrapper from './bootstrapper';
 import 'sweetalert/dist/sweetalert.css'
-
+import 'react-table/react-table.css'
 
 const injectables = bootstrapper();
 

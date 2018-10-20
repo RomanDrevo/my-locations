@@ -36,9 +36,18 @@ export default class LocationsStore {
 
 
     _createLocation = (location) => {
+        location.category = location.category.label
         this.locations.unshift(location);
         localStorage.setItem('locations', JSON.stringify(this.locations));
         this.closeCreateLocationModal()
+    }
+
+    @action
+    updateLocation = (locationIndex, newlocation) =>{
+        console.log("location: ", locationIndex)
+
+        this.locations[locationIndex] = newlocation
+        localStorage.setItem('locations', JSON.stringify(this.locations));
     }
 
     // @action
