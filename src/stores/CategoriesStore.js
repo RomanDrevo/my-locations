@@ -11,6 +11,19 @@ export default class CategoriesStore {
     @observable selectedCategory = null;
     @observable categoryToUpdate = null;
     @observable isUpdateCategoryModalOpen = false;
+    @observable transformedCategories = []
+
+
+    _transformCategories = () =>{
+        if (this.categories.length){
+            this.categories.map((x, index) => {
+                this.transformedCategories.push({
+                    value: index,
+                    label: x
+                })
+            })
+        }
+    }
 
     @action
     openDeleteSwal = (index) => {
@@ -25,19 +38,21 @@ export default class CategoriesStore {
 
     @action
     async loadCategories() {
-        this.isLoadingCategories = true;
+        this.isLoadingCategories = true
 
-        try {
-            const categories = await this._apiGateway.fetchCategories();
-            runInAction(() => this.categories = categories);
+        try{
+            const categories = JSON.parse(localStorage.getItem('categories'))
+            runInAction(()=> this.categories = categories)
+            this._transformCategories()
         }
         catch (error) {
             console.error(`Failed to load categories. error: ${error}`, error);
             runInAction(() => this.loadCategoriesError = error);
         }
         finally {
-            runInAction(() => this.isLoadingCategories = false);
+            this.isLoadingCategories = false
         }
+
     }
 
 

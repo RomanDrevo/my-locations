@@ -1,11 +1,12 @@
-import {action, observable } from 'mobx';
+import {action, observable, runInAction} from 'mobx';
 
 
 
 export default class LocationsStore {
     @observable locations = []
     @observable isCreateLocationModalOpen = false
-
+    @observable isLoadingLocations = false
+    @observable loadCategoriesError = null
 
     @action openCreateLocationModal = () =>{
         this.isCreateLocationModalOpen = true
@@ -16,9 +17,23 @@ export default class LocationsStore {
     }
 
     @action
-    loadLocations = () => {
+    async loadLocations() {
+        this.isLoadingLocations = true
+
+        try{
+            const locations = JSON.parse(localStorage.getItem('locations'))
+            runInAction(()=> this.locations = locations)
+        }
+        catch (error) {
+            console.error(`Failed to load locations. error: ${error}`, error);
+            runInAction(() => this.loadCategoriesError = error);
+        }
+        finally {
+            this.isLoadingLocations = false
+        }
 
     }
+
 
     _createLocation = (location) => {
         this.locations.unshift(location);

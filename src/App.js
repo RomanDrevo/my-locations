@@ -10,14 +10,15 @@ import {Col, Grid, Row} from "react-bootstrap";
 import Locations from "./components/locations/Locations";
 
 
-
 @withRouter
-@inject('categoriesStore')
+@inject('categoriesStore', 'locationsStore')
 @observer
 class App extends Component {
 
     componentDidMount() {
-        //Load everything from server
+        const {categoriesStore, locationsStore} = this.props
+        categoriesStore.loadCategories()
+        locationsStore.loadLocations()
     }
 
     render() {

@@ -5,6 +5,7 @@ import AddCategoryForm from "../categoryForm/addCategory/AddCategoryForm";
 import './Categories.module.scss'
 import SweetAlert from 'sweetalert2-react';
 import EditCategoryForm from "../categoryForm/editCategory/EditCategoryForm";
+import loader from '../../assets/images/loading.svg'
 
 class AddCategoryModal extends Component {
     render() {
@@ -40,7 +41,7 @@ class EditCategoryModal extends Component {
                     <Modal.Title id="contained-modal-title-lg">Edit Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="flex justify-center">
-                    <EditCategoryForm />
+                    <EditCategoryForm/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.props.onHide}>Close</Button>
@@ -92,26 +93,32 @@ class Categories extends Component {
                     onCancel={categoriesStore.closeDeleteSwal}
                 />
 
+                {
+                    categoriesStore.isLoadingCategories ?
+                        <img src={loader} className="loader" alt="loading-spinner"/>
+                        :
+                        <Col xs={4}>
+                            <ListGroup className="mt3">
+                                {
+                                    categoriesStore.categories.map((category, index) =>
+                                        <ListGroupItem key={index} className="">
+                                            <div className="category">{category}</div>
+                                            <Button onClick={() => categoriesStore.openUpdateCategoryModal(index)}
+                                                    bsStyle="success" className="mr2">
+                                                <Glyphicon glyph="edit"/>
+                                                <span className="ml1">EDIT</span>
+                                            </Button>
+                                            <Button bsStyle="danger" onClick={() => categoriesStore.openDeleteSwal(index)}>
+                                                <Glyphicon glyph="trash"/>
+                                                <span className="ml1">REMOVE</span>
+                                            </Button>
+                                        </ListGroupItem>
+                                    )
+                                }
+                            </ListGroup>;
+                        </Col>
+                }
 
-                <Col xs={4}>
-                    <ListGroup className="mt3">
-                        {
-                            categoriesStore.categories.map((category, index) =>
-                                <ListGroupItem key={index} className="">
-                                    <div className="category">{category}</div>
-                                    <Button onClick={() => categoriesStore.openUpdateCategoryModal(index)} bsStyle="success" className="mr2">
-                                        <Glyphicon glyph="edit"/>
-                                        <span className="ml1">EDIT</span>
-                                    </Button>
-                                    <Button bsStyle="danger" onClick={() => categoriesStore.openDeleteSwal(index)}>
-                                        <Glyphicon glyph="trash"/>
-                                        <span className="ml1">REMOVE</span>
-                                    </Button>
-                                </ListGroupItem>
-                            )
-                        }
-                    </ListGroup>;
-                </Col>
             </div>
         );
     }

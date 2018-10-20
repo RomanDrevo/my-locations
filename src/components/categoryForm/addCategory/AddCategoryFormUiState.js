@@ -28,8 +28,8 @@ export default class AddCategoryFormUiState {
             },
             onSuccess(form) {
                 // get field values
-                console.log('here!')
                 categoriesStore._createCategory(form.values().categoryName)
+                form.clear()
             },
             onError(form) {
                 alert('Form has errors!');

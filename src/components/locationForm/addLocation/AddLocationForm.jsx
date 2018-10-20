@@ -3,15 +3,15 @@ import ResponsiveComponent from "../../../framework/components/ResponsiveCompone
 import '../LocationForm.module.scss'
 import {inject, observer} from "mobx-react/index";
 import {Button, FormControl, FormGroup} from "react-bootstrap";
+import Select from 'react-select';
 
-
-@inject('addLocationFormUiState')
+@inject('addLocationFormUiState', 'categoriesStore')
 
 @observer
 class AddLocationForm extends ResponsiveComponent {
 
     renderDesktop() {
-        const {addLocationFormUiState} = this.props
+        const {addLocationFormUiState, categoriesStore} = this.props
         const {form} = addLocationFormUiState
 
         return (
@@ -25,6 +25,49 @@ class AddLocationForm extends ResponsiveComponent {
                             {...form.$('locationName').bind()}
                         />
                         <p className="error">{form.$('locationName').error}</p>
+                    </div>
+
+                    <div className="flex flex-column">
+                        <label className="mr2" htmlFor={form.$('address').id}>
+                            {form.$('address').label}
+                        </label>
+                        <FormControl
+                            {...form.$('address').bind()}
+                        />
+                        <p className="error">{form.$('address').error}</p>
+                    </div>
+
+                    <div className="flex flex-column">
+                        <label className="mr2" htmlFor={form.$('latitude').id}>
+                            {form.$('latitude').label}
+                        </label>
+                        <FormControl
+                            {...form.$('latitude').bind()}
+                        />
+                        <p className="error">{form.$('latitude').error}</p>
+                    </div>
+
+                    <div className="flex flex-column">
+                        <label className="mr2" htmlFor={form.$('longitude').id}>
+                            {form.$('longitude').label}
+                        </label>
+                        <FormControl
+                            {...form.$('longitude').bind()}
+                        />
+                        <p className="error">{form.$('longitude').error}</p>
+                    </div>
+
+                    <div className="flex flex-column">
+                        <label className="mr2" htmlFor={form.$('category').id}>
+                            {form.$('category').label}
+                        </label>
+
+                        <Select
+                            {...form.$('category').bind()}
+                            options={categoriesStore.transformedCategories}
+                            isMulti
+                        />
+                        <p className="error">{form.$('category').error}</p>
                     </div>
 
                     <div className="flex justify-between items-center">

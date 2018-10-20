@@ -15,7 +15,40 @@ const fields = [
         options: {
             validateOnChange: true
         }
-    }
+    },
+    {
+        name: 'latitude',
+        label: 'Latitude',
+        rules: 'required|numeric',
+        options: {
+            validateOnChange: true
+        }
+    },
+    {
+        name: 'longitude',
+        label: 'Longitude',
+        rules: 'required|numeric',
+        options: {
+            validateOnChange: true
+        }
+    },
+    {
+        name: 'address',
+        label: 'Address',
+        rules: 'required|string',
+        options: {
+            validateOnChange: true
+        }
+    },
+    {
+        name: 'category',
+        label: 'Category',
+        rules: 'required',
+        type: 'select',
+        options: {
+            validateOnChange: true
+        }
+    },
 ];
 
 export default class AddLocationFormUiState {
@@ -29,7 +62,8 @@ export default class AddLocationFormUiState {
             onSuccess(form) {
                 // get field values
                 console.log('values: ', form.values())
-                // categoriesStore._createCategory(form.values().categoryName)
+                let newLocation = form.values()
+                locationsStore._createLocation(newLocation)
             },
             onError(form) {
                 alert('Form has errors!');
