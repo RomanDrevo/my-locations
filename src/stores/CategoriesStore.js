@@ -57,9 +57,11 @@ export default class CategoriesStore {
 
 
     _createCategory = (category) => {
-        this.categories.unshift(category);
+        console.log('--category: ', category)
+        this.transformedCategories.unshift({label: category, value: 0});
+        this.categories.unshift(category)
         localStorage.setItem('categories', JSON.stringify(this.categories));
-        this.closeCreateNewCategoryModal()
+        // this.closeCreateNewCategoryModal()
     }
 
 

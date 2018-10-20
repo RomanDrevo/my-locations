@@ -6,6 +6,8 @@ import './Categories.module.scss'
 import SweetAlert from 'sweetalert2-react';
 import EditCategoryForm from "../categoryForm/editCategory/EditCategoryForm";
 import loader from '../../assets/images/loading.svg'
+import ReactTable from "react-table";
+import {toJS} from 'mobx';
 
 class AddCategoryModal extends Component {
     render() {
@@ -57,7 +59,7 @@ class Categories extends Component {
 
     render() {
         const {categoriesStore} = this.props
-        console.log('categories: ', categoriesStore.categories)
+        console.log('categories: ', toJS(categoriesStore.categories))
 
         return (
             <div className="categories-wrapper">
@@ -93,31 +95,84 @@ class Categories extends Component {
                     onCancel={categoriesStore.closeDeleteSwal}
                 />
 
+
+
                 {
                     categoriesStore.isLoadingCategories ?
                         <img src={loader} className="loader" alt="loading-spinner"/>
                         :
-                        <Col xs={4}>
-                            <ListGroup className="mt3">
-                                {
-                                    categoriesStore.categories.map((category, index) =>
-                                        <ListGroupItem key={index} className="">
-                                            <div className="category">{category}</div>
-                                            <Button onClick={() => categoriesStore.openUpdateCategoryModal(index)}
-                                                    bsStyle="success" className="mr2">
+                        <Col sm={4} className="mt2">
+                            <ReactTable
+                                data = { categoriesStore.transformedCategories}
+                                // resolveData={data => data.map(row => row)}
+                                columns={[
+                                    {
+                                        Header: "Category Name",
+                                        accessor: "label",
+                                        style: {textAlign: "center"}
+                                        // maxWidth: 200,
+                                    },
+                                    {
+                                        maxWidth: 40,
+                                        Cell: row => (
+                                            <Button
+                                                bsStyle="success"
+                                                bsSize="xsmall"
+                                                onClick={() => categoriesStore.openUpdateCategoryModal(row.index)}
+                                            >
                                                 <Glyphicon glyph="edit"/>
-                                                <span className="ml1">EDIT</span>
                                             </Button>
-                                            <Button bsStyle="danger" onClick={() => categoriesStore.openDeleteSwal(index)}>
+                                        )
+                                    },
+                                    {
+                                        maxWidth: 40,
+                                        Cell: row => (
+                                            <Button
+                                                bsStyle="danger"
+                                                bsSize="xsmall"
+                                                onClick={() => categoriesStore.openDeleteSwal(row.index)}
+                                            >
                                                 <Glyphicon glyph="trash"/>
-                                                <span className="ml1">REMOVE</span>
                                             </Button>
-                                        </ListGroupItem>
-                                    )
-                                }
-                            </ListGroup>;
+                                        )
+                                    }
+                                ]}
+                                defaultPageSize={10}
+                                className="-striped -highlight"
+                                sortable={true}
+                            />
+                            {
+                                categoriesStore.transformedCategories.map((category, index) => <div key={index} />)
+                            }
                         </Col>
                 }
+
+
+                {/*{*/}
+                    {/*categoriesStore.isLoadingCategories ?*/}
+                        {/*<img src={loader} className="loader" alt="loading-spinner"/>*/}
+                        {/*:*/}
+                        {/*<Col xs={4}>*/}
+                            {/*<ListGroup className="mt3">*/}
+                                {/*{*/}
+                                    {/*categoriesStore.categories.map((category, index) =>*/}
+                                        {/*<ListGroupItem key={index} className="">*/}
+                                            {/*<div className="category">{category}</div>*/}
+                                            {/*<Button onClick={() => categoriesStore.openUpdateCategoryModal(index)}*/}
+                                                    {/*bsStyle="success" className="mr2">*/}
+                                                {/*<Glyphicon glyph="edit"/>*/}
+                                                {/*<span className="ml1">EDIT</span>*/}
+                                            {/*</Button>*/}
+                                            {/*<Button bsStyle="danger" onClick={() => categoriesStore.openDeleteSwal(index)}>*/}
+                                                {/*<Glyphicon glyph="trash"/>*/}
+                                                {/*<span className="ml1">REMOVE</span>*/}
+                                            {/*</Button>*/}
+                                        {/*</ListGroupItem>*/}
+                                    {/*)*/}
+                                {/*}*/}
+                            {/*</ListGroup>;*/}
+                        {/*</Col>*/}
+                {/*}*/}
 
             </div>
         );

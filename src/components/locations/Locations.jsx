@@ -113,47 +113,22 @@ class Locations extends Component {
                     locationsStore.isLoadingLocations ?
                         <img src={loader} className="loader" alt="loading-spinner"/>
                         :
-                        <Col xs={12} className="mt2">
+                        <Col sm={5} className="mt2">
 
                             <ReactTable
                                 data={locationsStore.locations}
                                 columns={[
                                     {
-                                        Header: "Location Name",
+                                        Header: "Name",
                                         accessor: "locationName",
-                                        // Cell: this.renderEditable
+                                        style: {textAlign: "center"},
+                                        maxWidth: 100
                                     },
                                     {
                                         Header: "Address",
                                         accessor: "address",
-                                        // Cell: this.renderEditable
-                                    },
-                                    {
-                                        Header: "Longitude",
-                                        accessor: "longitude",
-                                        // Cell: this.renderEditable,
-                                        sortMethod: (a, b) => {
-                                            if (a.length === b.length) {
-                                                return a > b ? 1 : -1;
-                                            }
-                                            return a.length > b.length ? 1 : -1;
-                                        }
-                                    },
-                                    {
-                                        Header: "Latitude",
-                                        // Cell: this.renderEditable,
-                                        accessor: "latitude",
-                                        sortMethod: (a, b) => {
-                                            if (a.length === b.length) {
-                                                return a > b ? 1 : -1;
-                                            }
-                                            return a.length > b.length ? 1 : -1;
-                                        }
-
-                                    },
-                                    {
-                                        Header: "Category",
-                                        accessor: "category",
+                                        style: {textAlign: "center"},
+                                        maxWidth: 140
                                         // Cell: this.renderEditable
                                     },
                                     {
@@ -163,7 +138,6 @@ class Locations extends Component {
                                                 bsStyle="success"
                                                 bsSize="xsmall"
                                                 onClick={() => locationsStore.openUpdateLocationModal(row.index)}
-                                                // onClick={() => console.log(row.index)}
                                             >
                                                 <Glyphicon glyph="edit"/>
                                             </Button>
@@ -187,6 +161,17 @@ class Locations extends Component {
                                 defaultPageSize={10}
                                 className="-striped -highlight"
                                 sortable={true}
+                                SubComponent={row => {
+                                    console.log('row: ', row )
+                                    return (
+                                        <div style={{ padding: "0 20px 20px 20px" }}>
+                                            <br />
+                                            <h3>Longitude: {row.original.longitude}</h3>
+                                            <h3>Latitude: {row.original.latitude}</h3>
+                                            <h3>Category: {row.original.category}</h3>
+                                        </div>
+                                    );
+                                }}
                             />
 
                             {
