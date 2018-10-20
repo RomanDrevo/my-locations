@@ -5,7 +5,8 @@ import {inject, observer} from "mobx-react/index";
 import AddLocationForm from "../locationForm/addLocation/AddLocationForm";
 import loader from '../../assets/images/loading.svg'
 import ReactTable from "react-table";
-
+import EditLocationForm from "../locationForm/editLocation/EditLocationForm";
+import SweetAlert from 'sweetalert2-react';
 
 class AddLocationModal extends Component {
 
@@ -20,7 +21,30 @@ class AddLocationModal extends Component {
                     <Modal.Title id="contained-modal-title-lg">Add New Location</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="flex justify-center">
-                    <AddLocationForm />
+                    <AddLocationForm/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={this.props.onHide}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+}
+
+class EditLocationModal extends Component {
+
+    render() {
+        return (
+            <Modal
+                {...this.props}
+                bsSize="large"
+                aria-labelledby="contained-modal-title-lg"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-lg">Edit Location</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="flex justify-center">
+                    <EditLocationForm/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.props.onHide}>Close</Button>
@@ -34,30 +58,43 @@ class AddLocationModal extends Component {
 @observer
 class Locations extends Component {
 
-    renderEditable = (cellInfo) => {
-        // console.log('cellInfo: ', cellInfo)
-        const {locationsStore} = this.props
-        const data = [...locationsStore.locations]
-        return (
-            <div
-                style={{ backgroundColor: "#fafafa" }}
-                contentEditable
-                suppressContentEditableWarning
-                onBlur={e => {
-                    console.log('data: ', data)
-                    data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
-                    locationsStore.updateLocation(cellInfo.index, data[cellInfo.index])
-                }}
-                dangerouslySetInnerHTML={{
-                    __html: data[cellInfo.index][cellInfo.column.id]
-                }}
-            />
-        );
-    }
+    // renderEditable = (cellInfo) => {
+    //     // console.log('cellInfo: ', cellInfo)
+    //     const {locationsStore} = this.props
+    //     const data = locationsStore.locations
+    //     return (
+    //         <div
+    //             style={{backgroundColor: "#fafafa"}}
+    //             contentEditable
+    //             suppressContentEditableWarning
+    //             onBlur={e => {
+    //                 console.log('e: ', e.target.innerHTML)
+    //                 data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
+    //                 locationsStore.updateLocation(cellInfo.index, data[cellInfo.index])
+    //             }}
+    //             dangerouslySetInnerHTML={{
+    //                 __html: data[cellInfo.index][cellInfo.column.id]
+    //             }}
+    //         />
+    //     );
+    // }
+    //
+    // renderEditBtn = (cellInfo) => {
+    //     const {locationsStore} = this.props
+    //     return (
+    //         <Button
+    //             bsStyle="danger"
+    //             bsSize="xsmall"
+    //             onClick={() => locationsStore.deleteLocation(cellInfo.index)}
+    //             // onClick={() => console.log(cellInfo.index)}
+    //         >
+    //             <Glyphicon glyph="trash"/>
+    //         </Button>
+    //     )
+    // }
 
     render() {
         const {locationsStore} = this.props
-        console.log('locations: ', locationsStore.locations)
         return (
             <div className="locations-wrapper">
                 <Col xs={12}>
@@ -76,7 +113,7 @@ class Locations extends Component {
                     locationsStore.isLoadingLocations ?
                         <img src={loader} className="loader" alt="loading-spinner"/>
                         :
-                        <Col xs={12}>
+                        <Col xs={12} className="mt2">
 
                             <ReactTable
                                 data={locationsStore.locations}
@@ -84,17 +121,17 @@ class Locations extends Component {
                                     {
                                         Header: "Location Name",
                                         accessor: "locationName",
-                                        Cell: this.renderEditable
+                                        // Cell: this.renderEditable
                                     },
                                     {
                                         Header: "Address",
                                         accessor: "address",
-                                        Cell: this.renderEditable
+                                        // Cell: this.renderEditable
                                     },
                                     {
                                         Header: "Longitude",
                                         accessor: "longitude",
-                                        Cell: this.renderEditable,
+                                        // Cell: this.renderEditable,
                                         sortMethod: (a, b) => {
                                             if (a.length === b.length) {
                                                 return a > b ? 1 : -1;
@@ -104,7 +141,7 @@ class Locations extends Component {
                                     },
                                     {
                                         Header: "Latitude",
-                                        Cell: this.renderEditable,
+                                        // Cell: this.renderEditable,
                                         accessor: "latitude",
                                         sortMethod: (a, b) => {
                                             if (a.length === b.length) {
@@ -117,63 +154,74 @@ class Locations extends Component {
                                     {
                                         Header: "Category",
                                         accessor: "category",
-                                        Cell: this.renderEditable
+                                        // Cell: this.renderEditable
                                     },
                                     {
-                                        // Header: "Remove",
                                         maxWidth: 40,
-                                        Cell:  <Button
-                                                    bsStyle="danger"
-                                                    bsSize="xsmall"
-                                                    // onClick={() => locationsStore.deleteLocation(cellInfo.index)}
-                                                >
-                                                    <Glyphicon glyph="trash"/>
-                                                </Button>
+                                        Cell: row => (
+                                            <Button
+                                                bsStyle="success"
+                                                bsSize="xsmall"
+                                                onClick={() => locationsStore.openUpdateLocationModal(row.index)}
+                                                // onClick={() => console.log(row.index)}
+                                            >
+                                                <Glyphicon glyph="edit"/>
+                                            </Button>
+                                        )
+                                    },
+                                    {
+                                        maxWidth: 40,
+                                        Cell: row => (
+                                            <Button
+                                                bsStyle="danger"
+                                                bsSize="xsmall"
+                                                onClick={() => locationsStore.openDeleteSwal(row.index)}
+                                                // onClick={() => console.log(row.index)}
+                                            >
+                                                <Glyphicon glyph="trash"/>
+                                            </Button>
+                                        )
                                     }
                                 ]}
-                                // defaultSorted={[
-                                //     { id: "latitude", desc: true }
-                                // ]}
+
                                 defaultPageSize={10}
                                 className="-striped -highlight"
                                 sortable={true}
                             />
 
-
-
-
+                            {
+                                locationsStore.locations.map((location, i)=><div key={i} />)
+                            }
                             {/*<Table responsive className="mt2">*/}
-                                {/*<thead>*/}
-                                {/*<tr>*/}
-                                    {/*<th>Location Name</th>*/}
-                                    {/*<th>Address</th>*/}
-                                    {/*<th>Longitude</th>*/}
-                                    {/*<th>Latitude</th>*/}
-                                    {/*<th>Category</th>*/}
-                                    {/*<th>Edit/Delete</th>*/}
-                                {/*</tr>*/}
-                                {/*</thead>*/}
+                                {/*/!*<thead>*!/*/}
+                                {/*/!*<tr>*!/*/}
+                                    {/*/!*<th>Location Name</th>*!/*/}
+                                    {/*/!*<th>Address</th>*!/*/}
+                                    {/*/!*<th>Longitude</th>*!/*/}
+                                    {/*/!*<th>Latitude</th>*!/*/}
+                                    {/*/!*<th>Category</th>*!/*/}
+                                    {/*/!*<th>Edit/Delete</th>*!/*/}
+                                {/*/!*</tr>*!/*/}
+                                {/*/!*</thead>*!/*/}
                                 {/*<tbody>*/}
                                 {/*{*/}
-                                    {/*locationsStore.locations.map((location, index)=>(*/}
+                                    {/*locationsStore.locations.map((location, index) => (*/}
                                         {/*<tr key={index}>*/}
-                                            {/*<td>{location.locationName}</td>*/}
-                                            {/*<td>{location.address}</td>*/}
-                                            {/*<td>{location.longitude}</td>*/}
-                                            {/*<td>{location.latitude}</td>*/}
-                                            {/*{*/}
-                                                {/*location.category.map((category, index)=> (*/}
-                                                    {/*<td key={index}>{category.label}</td>*/}
-                                                {/*))*/}
-                                            {/*}*/}
-                                            {/*<td>*/}
-                                                {/*<Button bsStyle="success" className="mr2" bsSize="xsmall">*/}
-                                                    {/*<Glyphicon glyph="edit"/>*/}
-                                                {/*</Button>*/}
-                                                {/*<Button bsStyle="danger" bsSize="xsmall">*/}
-                                                    {/*<Glyphicon glyph="trash"/>*/}
-                                                {/*</Button>*/}
-                                            {/*</td>*/}
+                                            {/*/!*<td>{location.locationName}</td>*!/*/}
+                                            {/*/!*<td>{location.address}</td>*!/*/}
+                                            {/*/!*<td>{location.longitude}</td>*!/*/}
+                                            {/*/!*<td>{location.latitude}</td>*!/*/}
+                                            {/*/!*<td>{location.category}</td>*!/*/}
+                                            {/*/!*<td>*!/*/}
+                                            {/*/!*<Button bsStyle="success" className="mr2" bsSize="xsmall">*!/*/}
+                                            {/*/!*<Glyphicon glyph="edit"/>*!/*/}
+                                            {/*/!*</Button>*!/*/}
+                                            {/*/!*<Button*!/*/}
+                                            {/*/!*onClick={()=> locationsStore.deleteLocation(index)}*!/*/}
+                                            {/*/!*bsStyle="danger" bsSize="xsmall">*!/*/}
+                                            {/*/!*<Glyphicon glyph="trash"/>*!/*/}
+                                            {/*/!*</Button>*!/*/}
+                                            {/*/!*</td>*!/*/}
 
                                         {/*</tr>*/}
                                     {/*))*/}
@@ -184,7 +232,21 @@ class Locations extends Component {
                         </Col>
                 }
 
+                <SweetAlert
+                    warning
+                    showCancelButton={true}
+                    show={locationsStore.isDeleteSwalOpen}
+                    title="Are you sure?"
+                    text=""
+                    onConfirm={locationsStore.deleteLocation}
+                    cancelButtonText="No, keep it"
+                    onCancel={locationsStore.closeDeleteSwal}
+                />
 
+                <EditLocationModal
+                    show={locationsStore.isUpdateLocationModalOpen}
+                    onHide={locationsStore.closeUpdateLocationModal}
+                />
 
                 <AddLocationModal
                     show={locationsStore.isCreateLocationModalOpen}

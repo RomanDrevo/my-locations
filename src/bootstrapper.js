@@ -6,6 +6,7 @@ import LocationsStore from "./stores/LocationsStore";
 import AddCategoryFormUiState from "./components/categoryForm/addCategory/AddCategoryFormUiState"
 import EditCategoryFormUiState from "./components/categoryForm/editCategory/EditCategoryUiState"
 import AddLocationFormUiState from "./components/locationForm/addLocation/AddLocationFormUiState"
+import EditLocationFormUiState from "./components/locationForm/editLocation/EditLocationFormUiState";
 
 const bootstrapper = () => {
     // const apiGateway = new ApiGateway('https://jsonplaceholder.typicode.com/');
@@ -17,13 +18,15 @@ const bootstrapper = () => {
     const addCategoryFormUiState = new AddCategoryFormUiState(categoriesStore)
     const editCategoryFormUiState = new EditCategoryFormUiState(categoriesStore)
     const addLocationFormUiState = new AddLocationFormUiState(locationsStore)
+    const editLocationFormUiState = new EditLocationFormUiState(locationsStore)
 
     return {
         categoriesStore,
         locationsStore,
         addCategoryFormUiState,
         editCategoryFormUiState,
-        addLocationFormUiState
+        addLocationFormUiState,
+        editLocationFormUiState
     };
 };
 

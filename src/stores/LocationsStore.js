@@ -1,18 +1,21 @@
 import {action, observable, runInAction} from 'mobx';
 
 
-
 export default class LocationsStore {
     @observable locations = []
     @observable isCreateLocationModalOpen = false
     @observable isLoadingLocations = false
     @observable loadCategoriesError = null
+    @observable selectedLocation = null
+    @observable isUpdateLocationModalOpen = false
+    @observable locationToUpdate = null
+    @observable isDeleteSwalOpen = false
 
-    @action openCreateLocationModal = () =>{
+    @action openCreateLocationModal = () => {
         this.isCreateLocationModalOpen = true
     }
 
-    @action closeCreateLocationModal = () =>{
+    @action closeCreateLocationModal = () => {
         this.isCreateLocationModalOpen = false
     }
 
@@ -20,9 +23,9 @@ export default class LocationsStore {
     async loadLocations() {
         this.isLoadingLocations = true
 
-        try{
+        try {
             const locations = JSON.parse(localStorage.getItem('locations'))
-            runInAction(()=> this.locations = locations)
+            runInAction(() => this.locations = locations)
         }
         catch (error) {
             console.error(`Failed to load locations. error: ${error}`, error);
@@ -42,44 +45,42 @@ export default class LocationsStore {
         this.closeCreateLocationModal()
     }
 
-    @action
-    updateLocation = (locationIndex, newlocation) =>{
-        console.log("location: ", locationIndex)
-
-        this.locations[locationIndex] = newlocation
+    _updateLocation = (newLocation) => {
+            newLocation.category = newLocation.category.label
+        this.locations[this.selectedLocation] = newLocation
         localStorage.setItem('locations', JSON.stringify(this.locations));
+        this.closeUpdateLocationModal()
     }
 
-    // @action
-    // openDeleteSwal = (index) => {
-    //     this.selectedCategory = index
-    //     this.isDeleteSwalOpen = true
-    // }
-    //
-    // @action
-    // closeDeleteSwal = () => {
-    //     this.isDeleteSwalOpen = false
-    // }
+    @action
+    deleteLocation = () => {
+        this.locations.splice(this.selectedLocation, 1)
+        localStorage.setItem('locations', JSON.stringify(this.locations));
+        this.closeDeleteSwal()
+    }
 
-    // @action
-    // deleteCategory = () =>{
-    //     this.categories.splice(this.selectedCategory, 1)
-    //     localStorage.setItem('categories', JSON.stringify(this.categories));
-    //     this.closeDeleteSwal()
-    // }
+    @action
+    openDeleteSwal = (index) => {
+        this.selectedCategory = index
+        this.isDeleteSwalOpen = true
+    }
+
+    @action
+    closeDeleteSwal = () => {
+        this.isDeleteSwalOpen = false
+    }
 
 
-    // @action
-    // openUpdateCategoryModal = (index) => {
-    //     this.selectedCategory = index
-    //     this.isUpdateCategoryModalOpen = true
-    //     this.categoryToUpdate = this.categories[index]
-    //     console.log('categoryToUpdate: ', this.categoryToUpdate)
-    // }
+    @action
+    openUpdateLocationModal = (index) => {
+        this.selectedLocation = index
+        this.isUpdateLocationModalOpen = true
+        this.locationToUpdate = this.locations[index]
+    }
 
-    // @action
-    // closeUpdateCategoryModal = () => {
-    //     this.isUpdateCategoryModalOpen = false
-    // }
+    @action
+    closeUpdateLocationModal = () => {
+        this.isUpdateLocationModalOpen = false
+    }
 
 }
