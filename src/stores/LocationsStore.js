@@ -12,6 +12,10 @@ export default class LocationsStore {
     @observable isDeleteSwalOpen = false
     @observable filteredLocations = []
 
+    @action clearFilter = () =>{
+        this.filteredLocations = []
+    }
+
     @action
     filterByCategory = (category) =>{
         // this.locations.filter(location => {

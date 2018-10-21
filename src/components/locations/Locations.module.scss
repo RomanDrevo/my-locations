@@ -1,7 +1,10 @@
-.locations-wrapper :global{
-    margin-top: 82px;
-  .map-wrapper{
+.locations-wrapper :global {
+  margin-top: 82px;
+  .map-wrapper {
     height: 305px;
     width: 92%;
+  }
+  .category-filter {
+    min-width: 185px;
   }
 }

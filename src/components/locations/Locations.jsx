@@ -65,7 +65,7 @@ class Locations extends Component {
         long: null
     }
 
-    showLocation = (lat, lng) =>{
+    showLocation = (lat, lng) => {
         console.log(lat, lng)
         this.setState({
             lat, lng
@@ -74,8 +74,6 @@ class Locations extends Component {
 
     handleChange = (selectedOption) => {
         const {locationsStore} = this.props
-        // this.setState({ selectedOption });
-        // console.log(`Option selected:`, selectedOption);
         locationsStore.filterByCategory(selectedOption.label)
     }
 
@@ -94,18 +92,18 @@ class Locations extends Component {
                         <Glyphicon glyph="plus"/>
                         <span className="ml1">ADD LOCATION</span>
                     </Button>
-                    {
-                        categoriesStore.isLoadingCategories ?
-                            <img src={loader} className="loader" alt="loading-spinner"/>
-                            :
-                            <Col xs={3}>
-                                <Select
-                                    options={categoriesStore.transformedCategories}
-                                    isMulti={false}
-                                    onChange={this.handleChange}
-                                />
-                            </Col>
-                    }
+
+                    <div className="flex mt2">
+                        <Select
+                            className="category-filter"
+                            options={categoriesStore.transformedCategories}
+                            isMulti={false}
+                            onChange={this.handleChange}
+                            placeholder="Filter by category"
+                        />
+                        <Button onClick={locationsStore.clearFilter}>Clear Filter</Button>
+                    </div>
+
 
                 </Col>
 
@@ -145,7 +143,7 @@ class Locations extends Component {
                                             <Button
                                                 bsStyle="info"
                                                 bsSize="xsmall"
-                                                onClick={() =>(this.showLocation(row.original.latitude, row.original.longitude))}
+                                                onClick={() => (this.showLocation(row.original.latitude, row.original.longitude))}
                                             >
                                                 <Glyphicon glyph="map-marker"/>
                                             </Button>
@@ -181,10 +179,10 @@ class Locations extends Component {
                                 className="-striped -highlight"
                                 sortable={true}
                                 SubComponent={row => {
-                                    console.log('row: ', row )
+                                    console.log('row: ', row)
                                     return (
-                                        <div style={{ padding: "0 20px 20px 20px" }}>
-                                            <br />
+                                        <div style={{padding: "0 20px 20px 20px"}}>
+                                            <br/>
                                             <h5>Latitude: {row.original.latitude}</h5>
                                             <h5>Longitude: {row.original.longitude}</h5>
                                             <h5>Category: {row.original.category}</h5>
@@ -194,51 +192,14 @@ class Locations extends Component {
                             />
 
                             {
-                                locationsStore.locations.map((location, i)=><div key={i} />)
+                                locationsStore.locations.map((location, i) => <div key={i}/>)
                             }
-                            {/*<Table responsive className="mt2">*/}
-                                {/*/!*<thead>*!/*/}
-                                {/*/!*<tr>*!/*/}
-                                    {/*/!*<th>Location Name</th>*!/*/}
-                                    {/*/!*<th>Address</th>*!/*/}
-                                    {/*/!*<th>Longitude</th>*!/*/}
-                                    {/*/!*<th>Latitude</th>*!/*/}
-                                    {/*/!*<th>Category</th>*!/*/}
-                                    {/*/!*<th>Edit/Delete</th>*!/*/}
-                                {/*/!*</tr>*!/*/}
-                                {/*/!*</thead>*!/*/}
-                                {/*<tbody>*/}
-                                {/*{*/}
-                                    {/*locationsStore.locations.map((location, index) => (*/}
-                                        {/*<tr key={index}>*/}
-                                            {/*/!*<td>{location.locationName}</td>*!/*/}
-                                            {/*/!*<td>{location.address}</td>*!/*/}
-                                            {/*/!*<td>{location.longitude}</td>*!/*/}
-                                            {/*/!*<td>{location.latitude}</td>*!/*/}
-                                            {/*/!*<td>{location.category}</td>*!/*/}
-                                            {/*/!*<td>*!/*/}
-                                            {/*/!*<Button bsStyle="success" className="mr2" bsSize="xsmall">*!/*/}
-                                            {/*/!*<Glyphicon glyph="edit"/>*!/*/}
-                                            {/*/!*</Button>*!/*/}
-                                            {/*/!*<Button*!/*/}
-                                            {/*/!*onClick={()=> locationsStore.deleteLocation(index)}*!/*/}
-                                            {/*/!*bsStyle="danger" bsSize="xsmall">*!/*/}
-                                            {/*/!*<Glyphicon glyph="trash"/>*!/*/}
-                                            {/*/!*</Button>*!/*/}
-                                            {/*/!*</td>*!/*/}
-
-                                        {/*</tr>*/}
-                                    {/*))*/}
-                                {/*}*/}
-
-                                {/*</tbody>*/}
-                            {/*</Table>*/}
                         </Col>
                 }
 
                 <Col sm={6}>
                     <div className="map-wrapper">
-                        <MapContainer position={{lat: this.state.lat, lng: this.state.lng}} />
+                        <MapContainer position={{lat: this.state.lat, lng: this.state.lng}}/>
                     </div>
                 </Col>
 
