@@ -8,7 +8,7 @@ import ReactTable from "react-table";
 import EditLocationForm from "../locationForm/editLocation/EditLocationForm";
 import SweetAlert from 'sweetalert2-react';
 import MapContainer from "../map/MapContainer";
-
+import Select from 'react-select';
 
 class AddLocationModal extends Component {
 
@@ -56,44 +56,9 @@ class EditLocationModal extends Component {
     }
 }
 
-@inject('locationsStore')
+@inject('locationsStore', 'categoriesStore')
 @observer
 class Locations extends Component {
-
-    // renderEditable = (cellInfo) => {
-    //     // console.log('cellInfo: ', cellInfo)
-    //     const {locationsStore} = this.props
-    //     const data = locationsStore.locations
-    //     return (
-    //         <div
-    //             style={{backgroundColor: "#fafafa"}}
-    //             contentEditable
-    //             suppressContentEditableWarning
-    //             onBlur={e => {
-    //                 console.log('e: ', e.target.innerHTML)
-    //                 data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
-    //                 locationsStore.updateLocation(cellInfo.index, data[cellInfo.index])
-    //             }}
-    //             dangerouslySetInnerHTML={{
-    //                 __html: data[cellInfo.index][cellInfo.column.id]
-    //             }}
-    //         />
-    //     );
-    // }
-    //
-    // renderEditBtn = (cellInfo) => {
-    //     const {locationsStore} = this.props
-    //     return (
-    //         <Button
-    //             bsStyle="danger"
-    //             bsSize="xsmall"
-    //             onClick={() => locationsStore.deleteLocation(cellInfo.index)}
-    //             // onClick={() => console.log(cellInfo.index)}
-    //         >
-    //             <Glyphicon glyph="trash"/>
-    //         </Button>
-    //     )
-    // }
 
     state = {
         lat: null,
@@ -107,8 +72,16 @@ class Locations extends Component {
         })
     }
 
-    render() {
+    handleChange = (selectedOption) => {
         const {locationsStore} = this.props
+        // this.setState({ selectedOption });
+        // console.log(`Option selected:`, selectedOption);
+        locationsStore.filterByCategory(selectedOption.label)
+    }
+
+    render() {
+        const {locationsStore, categoriesStore} = this.props
+        const locations = locationsStore.filteredLocations.length ? locationsStore.filteredLocations : locationsStore.locations
         return (
             <div className="locations-wrapper">
                 <Col xs={12}>
@@ -121,7 +94,21 @@ class Locations extends Component {
                         <Glyphicon glyph="plus"/>
                         <span className="ml1">ADD LOCATION</span>
                     </Button>
+                    {
+                        categoriesStore.isLoadingCategories ?
+                            <img src={loader} className="loader" alt="loading-spinner"/>
+                            :
+                            <Col xs={3}>
+                                <Select
+                                    options={categoriesStore.transformedCategories}
+                                    isMulti={false}
+                                    onChange={this.handleChange}
+                                />
+                            </Col>
+                    }
+
                 </Col>
+
 
                 {
                     locationsStore.isLoadingLocations ?
@@ -130,7 +117,7 @@ class Locations extends Component {
                         <Col sm={6} className="mt2">
 
                             <ReactTable
-                                data={locationsStore.locations}
+                                data={locations}
                                 columns={[
                                     {
                                         Header: "Name",

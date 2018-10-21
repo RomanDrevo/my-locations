@@ -10,6 +10,20 @@ export default class LocationsStore {
     @observable isUpdateLocationModalOpen = false
     @observable locationToUpdate = null
     @observable isDeleteSwalOpen = false
+    @observable filteredLocations = []
+
+    @action
+    filterByCategory = (category) =>{
+        // this.locations.filter(location => {
+        //     if( location.category === category){
+        //         console.log('yes, category is: ', category)
+        //         this.filteredLocations.push(location)
+        //     }
+        //     console.log('no', category)
+        // })
+
+        this.filteredLocations = this.locations.filter(location => location.category === category)
+    }
 
     @action openCreateLocationModal = () => {
         this.isCreateLocationModalOpen = true

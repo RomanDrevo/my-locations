@@ -27,21 +27,14 @@ class MapContainer extends Component {
         }
     };
 
-    fetchPlaces = (mapProps, map) =>{
-        const {google} = mapProps;
-        const service = new google.maps.places.PlacesService(map);
-        console.log('service: ', service)
-    }
-
     render() {
         const {position} = this.props
-        console.log('position: ', position)
+        // console.log('position: ', position)
         return (
             <Map
                 style={{
                     width: '92%'
                 }}
-                onReady={this.fetchPlaces}
                 zoom={8}
                 google={this.props.google}
                 onClick={this.onMapClicked}

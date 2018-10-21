@@ -2,12 +2,10 @@ import React from 'react';
 import './Header.module.scss'
 import ResponsiveComponent from "../../framework/components/ResponsiveComponent";
 import {Dropdown, MenuItem} from "react-bootstrap";
-
-
 import {withRouter} from "react-router-dom";
 
-@withRouter
 
+@withRouter
 class Header extends ResponsiveComponent {
 
     componentDidMount(){

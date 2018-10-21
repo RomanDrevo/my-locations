@@ -51,6 +51,7 @@ export default class CategoriesStore {
         }
         finally {
             this.isLoadingCategories = false
+            console.log('trans cat: ', this.transformedCategories)
         }
 
     }
