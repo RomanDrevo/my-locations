@@ -112,7 +112,7 @@ class Locations extends Component {
                     locationsStore.isLoadingLocations ?
                         <img src={loader} className="loader" alt="loading-spinner"/>
                         :
-                        <Row className="mt2">
+                        <Col sm={4} className="mt2">
 
                             <ReactTable
                                 data={locations}
@@ -121,58 +121,99 @@ class Locations extends Component {
                                         Header: "Name",
                                         accessor: "locationName",
                                         style: {textAlign: "center"},
-                                        maxWidth: 80
+                                        maxWidth: 80,
+                                        className: 'flex items-center'
                                     },
                                     {
                                         Header: "Address",
                                         accessor: "address",
                                         style: {textAlign: "center"},
-                                        maxWidth: 75
-                                        // Cell: this.renderEditable
+                                        maxWidth: 65,
+                                        className: 'flex items-center'
                                     },
                                     {
                                         Header: "Category",
                                         accessor: "category",
                                         style: {textAlign: "center"},
-                                        maxWidth: 70
+                                        maxWidth: 60,
+                                        className: 'flex items-center'
                                     },
                                     {
                                         // Header: "Map",
-                                        maxWidth: 30,
+                                        maxWidth: 50,
                                         Cell: row => (
+                                            <div className="flex flex-column">
                                             <Button
+                                                className=""
                                                 bsStyle="info"
                                                 bsSize="xsmall"
                                                 onClick={() => (this.showLocation(row.original.latitude, row.original.longitude))}
                                             >
-                                                <Glyphicon glyph="map-marker"/>
+                                                Map
                                             </Button>
+                                                <Button
+                                                    className="mt1"
+                                                    bsStyle="warning"
+                                                    bsSize="xsmall"
+                                                    onClick={() => locationsStore.openUpdateLocationModal(row.index)}
+                                                >
+                                                    <Glyphicon glyph="edit"/>
+                                                </Button>
+                                                <Button
+                                                    className="mt1"
+                                                    bsStyle="danger"
+                                                    bsSize="xsmall"
+                                                    onClick={() => locationsStore.openDeleteSwal(row.index)}
+                                                >
+                                                    <Glyphicon glyph="trash"/>
+                                                </Button>
+                                            </div>
                                         )
                                     },
                                     {
-                                        maxWidth: 30,
-                                        Cell: row => (
-                                            <Button
-                                                bsStyle="warning"
-                                                bsSize="xsmall"
-                                                onClick={() => locationsStore.openUpdateLocationModal(row.index)}
-                                            >
-                                                <Glyphicon glyph="edit"/>
-                                            </Button>
-                                        )
+                                        expander: true,
+                                        Header: () => <strong>More</strong>,
+                                        width: 40,
+                                        Expander: ({ isExpanded, ...rest }) =>
+                                            <div>
+                                                {isExpanded
+                                                    ? <span>&#x2299;</span>
+                                                    : <span>&#x2295;</span>}
+                                            </div>,
+                                        style: {
+                                            cursor: "pointer",
+                                            fontSize: 25,
+                                            padding: "0",
+                                            textAlign: "center",
+                                            userSelect: "none",
+                                            position: "relative",
+                                            top: "24px"
+                                        }
                                     },
-                                    {
-                                        maxWidth: 30,
-                                        Cell: row => (
-                                            <Button
-                                                bsStyle="danger"
-                                                bsSize="xsmall"
-                                                onClick={() => locationsStore.openDeleteSwal(row.index)}
-                                            >
-                                                <Glyphicon glyph="trash"/>
-                                            </Button>
-                                        )
-                                    }
+                                    // {
+                                    //     maxWidth: 30,
+                                    //     Cell: row => (
+                                    //         <Button
+                                    //             bsStyle="warning"
+                                    //             bsSize="xsmall"
+                                    //             onClick={() => locationsStore.openUpdateLocationModal(row.index)}
+                                    //         >
+                                    //             <Glyphicon glyph="edit"/>
+                                    //         </Button>
+                                    //     )
+                                    // },
+                                    // {
+                                    //     maxWidth: 30,
+                                    //     Cell: row => (
+                                    //         <Button
+                                    //             bsStyle="danger"
+                                    //             bsSize="xsmall"
+                                    //             onClick={() => locationsStore.openDeleteSwal(row.index)}
+                                    //         >
+                                    //             <Glyphicon glyph="trash"/>
+                                    //         </Button>
+                                    //     )
+                                    // }
                                 ]}
 
                                 defaultPageSize={5}
@@ -194,7 +235,7 @@ class Locations extends Component {
                             {
                                 locationsStore.locations.length ? locationsStore.locations.map((location, i) => <div key={i}/>) : null
                             }
-                        </Row>
+                        </Col>
                 }
 
                 <Col sm={6}>

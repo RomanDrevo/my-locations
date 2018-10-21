@@ -38,10 +38,10 @@ class MapContainer extends Component {
                 zoom={8}
                 google={this.props.google}
                 onClick={this.onMapClicked}
-                initialCenter={{
-                    lat: position.lat,
-                    lng: position.lng
-                }}
+                // initialCenter={{
+                //     lat: position.lat,
+                //     lng: position.lng
+                // }}
                 center={{
                     lat: position.lat,
                     lng: position.lng
