@@ -9,6 +9,7 @@ import EditLocationForm from "../locationForm/editLocation/EditLocationForm";
 import SweetAlert from 'sweetalert2-react';
 import MapContainer from "../map/MapContainer";
 import Select from 'react-select';
+import ResponsiveComponent from "../../framework/components/ResponsiveComponent";
 
 class AddLocationModal extends Component {
 
@@ -58,7 +59,7 @@ class EditLocationModal extends Component {
 
 @inject('locationsStore', 'categoriesStore')
 @observer
-class Locations extends Component {
+class Locations extends ResponsiveComponent {
 
     state = {
         lat: null,
@@ -78,7 +79,175 @@ class Locations extends Component {
         locationsStore.filterByCategory(selectedOption.label)
     }
 
-    render() {
+    renderDesktop() {
+        const {locationsStore, categoriesStore} = this.props
+        const locations = locationsStore.filteredLocations.length ? locationsStore.filteredLocations : locationsStore.locations
+        return (
+            <div className="locations-wrapper">
+                <Col sm={12}>
+                    <h1 className="">Locations</h1>
+                    <Button
+                        className="flex flex-column"
+                        bsStyle="primary"
+                        onClick={locationsStore.openCreateLocationModal}
+                    >
+                        <Glyphicon glyph="plus"/>
+                        <span className="ml1">ADD LOCATION</span>
+                    </Button>
+                    <div className="flex mt2">
+                        <Select
+                            className="category-filter"
+                            options={categoriesStore.transformedCategories}
+                            isMulti={false}
+                            onChange={this.handleChange}
+                            placeholder="Filter by category"
+                        />
+                        <Button onClick={locationsStore.clearFilter}>Clear Filter</Button>
+                    </div>
+
+
+                </Col>
+
+
+                {
+                    locationsStore.isLoadingLocations ?
+                        <img src={loader} className="loader" alt="loading-spinner"/>
+                        :
+                        <Col sm={6} className="mt2">
+
+                            <ReactTable
+                                data={locations}
+                                columns={[
+                                    {
+                                        Header: "Name",
+                                        accessor: "locationName",
+                                        style: {textAlign: "center"},
+                                        maxWidth: 100,
+                                        className: 'flex items-center'
+                                    },
+                                    {
+                                        Header: "Address",
+                                        accessor: "address",
+                                        style: {textAlign: "center"},
+                                        width: 150,
+                                        className: 'flex items-center'
+                                    },
+                                    {
+                                        Header: "Category",
+                                        accessor: "category",
+                                        style: {textAlign: "center"},
+                                        maxWidth: 90,
+                                        className: 'flex items-center'
+                                    },
+                                    {
+                                        maxWidth: 110,
+                                        Cell: row => (
+                                            <Button
+                                                bsStyle="info"
+                                                bsSize="xsmall"
+                                                onClick={() => (this.showLocation(row.original.latitude, row.original.longitude))}
+                                            >
+                                                Show On Map
+                                            </Button>
+                                        )
+                                    },
+                                    {
+                                        maxWidth: 30,
+                                        Cell: row => (
+                                            <Button
+                                                bsStyle="warning"
+                                                bsSize="xsmall"
+                                                onClick={() => locationsStore.openUpdateLocationModal(row.index)}
+                                            >
+                                                <Glyphicon glyph="edit"/>
+                                            </Button>
+                                        )
+                                    },
+                                    {
+                                        maxWidth: 30,
+                                        Cell: row => (
+                                            <Button
+                                                bsStyle="danger"
+                                                bsSize="xsmall"
+                                                onClick={() => locationsStore.openDeleteSwal(row.index)}
+                                            >
+                                                <Glyphicon glyph="trash"/>
+                                            </Button>
+                                        )
+                                    },
+                                    {
+                                        expander: true,
+                                        Header: () => <strong>More</strong>,
+                                        width: 40,
+                                        Expander: ({ isExpanded, ...rest }) =>
+                                            <div>
+                                                {isExpanded
+                                                    ? <span>&#x2299;</span>
+                                                    : <span>&#x2295;</span>}
+                                            </div>,
+                                        style: {
+                                            cursor: "pointer",
+                                            fontSize: 25,
+                                            padding: "0",
+                                            textAlign: "center",
+                                            userSelect: "none"
+                                        }
+                                    },
+                                ]}
+
+                                defaultPageSize={5}
+                                className="-striped -highlight"
+                                sortable={true}
+                                SubComponent={row => {
+                                    console.log('row: ', row)
+                                    return (
+                                        <div style={{padding: "0 20px 20px 20px"}}>
+                                            <br/>
+                                            <h5>Latitude: {row.original.latitude}</h5>
+                                            <h5>Longitude: {row.original.longitude}</h5>
+                                            <h5>Category: {row.original.category}</h5>
+                                        </div>
+                                    );
+                                }}
+                            />
+
+                            {
+                                locationsStore.locations.length ? locationsStore.locations.map((location, i) => <div key={i}/>) : null
+                            }
+                        </Col>
+                }
+
+                <Col sm={6}>
+                    <div className="map-wrapper">
+                        <MapContainer position={{lat: this.state.lat, lng: this.state.lng}}/>
+                    </div>
+                </Col>
+
+                <SweetAlert
+                    warning
+                    showCancelButton={true}
+                    show={locationsStore.isDeleteSwalOpen}
+                    title="Are you sure?"
+                    text=""
+                    onConfirm={locationsStore.deleteLocation}
+                    cancelButtonText="No, keep it"
+                    onCancel={locationsStore.closeDeleteSwal}
+                />
+
+                <EditLocationModal
+                    show={locationsStore.isUpdateLocationModalOpen}
+                    onHide={locationsStore.closeUpdateLocationModal}
+                />
+
+                <AddLocationModal
+                    show={locationsStore.isCreateLocationModalOpen}
+                    onHide={locationsStore.closeCreateLocationModal}
+                />
+            </div>
+        );
+    }
+
+    renderMobile (){
         const {locationsStore, categoriesStore} = this.props
         const locations = locationsStore.filteredLocations.length ? locationsStore.filteredLocations : locationsStore.locations
         return (
@@ -143,14 +312,14 @@ class Locations extends Component {
                                         maxWidth: 50,
                                         Cell: row => (
                                             <div className="flex flex-column">
-                                            <Button
-                                                className=""
-                                                bsStyle="info"
-                                                bsSize="xsmall"
-                                                onClick={() => (this.showLocation(row.original.latitude, row.original.longitude))}
-                                            >
-                                                Map
-                                            </Button>
+                                                <Button
+                                                    className=""
+                                                    bsStyle="info"
+                                                    bsSize="xsmall"
+                                                    onClick={() => (this.showLocation(row.original.latitude, row.original.longitude))}
+                                                >
+                                                    Map
+                                                </Button>
                                                 <Button
                                                     className="mt1"
                                                     bsStyle="warning"
