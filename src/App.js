@@ -31,14 +31,13 @@ class App extends Component {
                     <Row>
                         <Col sm={12}>
                             <Switch>
-                                <Route exact path="/" render={() => <Home {...this.props}/>}/>
-                                <Route exact path="/categories" component={Categories} />
+                                {/*<Route exact path="/" render={() => <Home {...this.props}/>}/>*/}
+                                <Route exact path="/" component={Categories} />
                                 <Route exact path="/locations" component={Locations} />
                             </Switch>
                         </Col>
                     </Row>
                 </Grid>
-
                 <Footer />
             </div>
         );

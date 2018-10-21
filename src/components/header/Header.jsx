@@ -25,9 +25,9 @@ class Header extends ResponsiveComponent {
                             <div className="icon-bar"/>
                         </Dropdown.Toggle>
                         <Dropdown.Menu className="super-colors">
-                            <MenuItem eventKey="1" onClick={()=> history.push('/')}>Home</MenuItem>
-                            <MenuItem divider/>
-                            <MenuItem eventKey="2" onClick={()=> history.push('/categories')}>Categories</MenuItem>
+                            {/*<MenuItem eventKey="1" onClick={()=> history.push('/')}>Home</MenuItem>*/}
+                            {/*<MenuItem divider/>*/}
+                            <MenuItem eventKey="2" onClick={()=> history.push('/')}>Categories</MenuItem>
                             <MenuItem divider/>
                             <MenuItem eventKey="3" onClick={()=> history.push('/locations')}>Locations</MenuItem>
                         </Dropdown.Menu>

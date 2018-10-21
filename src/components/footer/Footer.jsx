@@ -28,7 +28,7 @@ class Footer extends ResponsiveComponent {
                             <Glyphicon glyph="globe"/>
                             <span className="ml1">Locations</span>
                         </Button>
-                        <Button onClick={()=> history.push('/categories')}>
+                        <Button onClick={()=> history.push('/')}>
                             <Glyphicon glyph="th-list"/>
                             <span className="ml1">Categories</span>
                         </Button>
