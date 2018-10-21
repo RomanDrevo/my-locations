@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ResponsiveComponent from "../../../framework/components/ResponsiveComponent";
 import '../CategoryForm.scss'
 import {inject, observer} from "mobx-react/index";
@@ -8,9 +8,9 @@ import {Button, FormControl, FormGroup} from "react-bootstrap";
 @inject('addCategoryFormUiState')
 
 @observer
-class AddCategoryForm extends ResponsiveComponent {
+class AddCategoryForm extends Component {
 
-    renderDesktop() {
+    render() {
         const {addCategoryFormUiState} = this.props
         const {form} = addCategoryFormUiState
 
@@ -39,13 +39,13 @@ class AddCategoryForm extends ResponsiveComponent {
         );
     }
 
-    renderMobile() {
-        return (
-            <div>
-                mobile form
-            </div>
-        );
-    }
+    // renderMobile() {
+    //     return (
+    //         <div>
+    //             mobile form
+    //         </div>
+    //     );
+    // }
 
 }
 

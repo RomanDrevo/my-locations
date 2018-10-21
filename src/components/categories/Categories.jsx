@@ -59,7 +59,7 @@ class Categories extends Component {
 
     render() {
         const {categoriesStore} = this.props
-        console.log('categories: ', toJS(categoriesStore.categories))
+        console.log('trans categories: ', categoriesStore.transformedCategories)
 
         return (
             <div className="categories-wrapper">
@@ -110,7 +110,6 @@ class Categories extends Component {
                                         Header: "Category Name",
                                         accessor: "label",
                                         style: {textAlign: "center"}
-                                        // maxWidth: 200,
                                     },
                                     {
                                         maxWidth: 40,

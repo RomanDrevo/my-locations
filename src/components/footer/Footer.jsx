@@ -1,11 +1,10 @@
-import React from 'react';
-import ResponsiveComponent from "../../framework/components/ResponsiveComponent";
+import React, {Component} from 'react';
 import {Grid, Row} from "react-bootstrap";
 import './Footer.module.scss'
 
-class Footer extends ResponsiveComponent {
+class Footer extends Component {
 
-    renderDesktop() {
+    render() {
         return (
             <Grid fluid className="footer" >
                 <Row>
@@ -13,10 +12,6 @@ class Footer extends ResponsiveComponent {
                 </Row>
             </Grid>
         );
-    }
-
-    renderMobile() {
-        return <div>Mobile Footer</div>
     }
 }
 

@@ -57,7 +57,6 @@ export default class CategoriesStore {
 
 
     _createCategory = (category) => {
-        console.log('--category: ', category)
         this.transformedCategories.unshift({label: category, value: 0});
         this.categories.unshift(category)
         localStorage.setItem('categories', JSON.stringify(this.categories));
@@ -67,12 +66,14 @@ export default class CategoriesStore {
 
     _updateCategory = (category) =>{
         this.categories[this.selectedCategory] = category
+        this.transformedCategories[this.selectedCategory].label = category
         localStorage.setItem('categories', JSON.stringify(this.categories));
         this.closeUpdateCategoryModal()
     }
 
     @action
     deleteCategory = () =>{
+        this.transformedCategories.splice(this.selectedCategory, 1)
         this.categories.splice(this.selectedCategory, 1)
         localStorage.setItem('categories', JSON.stringify(this.categories));
         this.closeDeleteSwal()

@@ -150,7 +150,6 @@ class Locations extends Component {
                                                 bsStyle="danger"
                                                 bsSize="xsmall"
                                                 onClick={() => locationsStore.openDeleteSwal(row.index)}
-                                                // onClick={() => console.log(row.index)}
                                             >
                                                 <Glyphicon glyph="trash"/>
                                             </Button>
@@ -158,7 +157,7 @@ class Locations extends Component {
                                     }
                                 ]}
 
-                                defaultPageSize={10}
+                                defaultPageSize={5}
                                 className="-striped -highlight"
                                 sortable={true}
                                 SubComponent={row => {
@@ -166,9 +165,9 @@ class Locations extends Component {
                                     return (
                                         <div style={{ padding: "0 20px 20px 20px" }}>
                                             <br />
-                                            <h3>Longitude: {row.original.longitude}</h3>
-                                            <h3>Latitude: {row.original.latitude}</h3>
-                                            <h3>Category: {row.original.category}</h3>
+                                            <h5>Longitude: {row.original.longitude}</h5>
+                                            <h5>Latitude: {row.original.latitude}</h5>
+                                            <h5>Category: {row.original.category}</h5>
                                         </div>
                                     );
                                 }}

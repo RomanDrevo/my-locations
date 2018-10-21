@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ResponsiveComponent from "../../../framework/components/ResponsiveComponent";
 import '../CategoryForm.scss'
 import {inject, observer} from "mobx-react/index";
@@ -8,7 +8,7 @@ import {Button, FormControl, FormGroup} from "react-bootstrap";
 @inject('editCategoryFormUiState', 'categoriesStore')
 
 @observer
-class EditCategoryForm extends ResponsiveComponent {
+class EditCategoryForm extends Component {
 
     componentDidMount(){
         const {editCategoryFormUiState, categoriesStore} = this.props
@@ -16,7 +16,7 @@ class EditCategoryForm extends ResponsiveComponent {
         form.set({categoryName: categoriesStore.categoryToUpdate});
     }
 
-    renderDesktop() {
+    render() {
         const {editCategoryFormUiState} = this.props
         const {form} = editCategoryFormUiState
 
@@ -45,13 +45,13 @@ class EditCategoryForm extends ResponsiveComponent {
         );
     }
 
-    renderMobile() {
-        return (
-            <div>
-                mobile form
-            </div>
-        );
-    }
+    // renderMobile() {
+    //     return (
+    //         <div>
+    //             mobile form
+    //         </div>
+    //     );
+    // }
 
 }
 
