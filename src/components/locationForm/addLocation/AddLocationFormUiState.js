@@ -64,6 +64,7 @@ export default class AddLocationFormUiState {
                 console.log('values: ', form.values())
                 let newLocation = form.values()
                 locationsStore._createLocation(newLocation)
+                form.clear()
             },
             onError(form) {
                 alert('Form has errors!');

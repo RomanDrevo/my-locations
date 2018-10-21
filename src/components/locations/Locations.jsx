@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Locations.module.scss'
-import {Button, Col, Glyphicon, Modal, Table} from "react-bootstrap";
+import {Button, Col, Glyphicon, Modal, Row, Table} from "react-bootstrap";
 import {inject, observer} from "mobx-react/index";
 import AddLocationForm from "../locationForm/addLocation/AddLocationForm";
 import loader from '../../assets/images/loading.svg'
@@ -66,6 +66,7 @@ class Locations extends Component {
     }
 
     showLocation = (lat, lng) => {
+        window.navigator.vibrate(400)
         console.log(lat, lng)
         this.setState({
             lat, lng
@@ -82,7 +83,7 @@ class Locations extends Component {
         const locations = locationsStore.filteredLocations.length ? locationsStore.filteredLocations : locationsStore.locations
         return (
             <div className="locations-wrapper">
-                <Col xs={12}>
+                <Col sm={12}>
                     <h1 className="">Locations</h1>
                     <Button
                         className="flex flex-column"
@@ -92,7 +93,6 @@ class Locations extends Component {
                         <Glyphicon glyph="plus"/>
                         <span className="ml1">ADD LOCATION</span>
                     </Button>
-
                     <div className="flex mt2">
                         <Select
                             className="category-filter"
@@ -112,7 +112,7 @@ class Locations extends Component {
                     locationsStore.isLoadingLocations ?
                         <img src={loader} className="loader" alt="loading-spinner"/>
                         :
-                        <Col sm={6} className="mt2">
+                        <Row className="mt2">
 
                             <ReactTable
                                 data={locations}
@@ -127,18 +127,18 @@ class Locations extends Component {
                                         Header: "Address",
                                         accessor: "address",
                                         style: {textAlign: "center"},
-                                        maxWidth: 80
+                                        maxWidth: 75
                                         // Cell: this.renderEditable
                                     },
                                     {
                                         Header: "Category",
                                         accessor: "category",
                                         style: {textAlign: "center"},
-                                        maxWidth: 80
+                                        maxWidth: 70
                                     },
                                     {
-                                        Header: "Map",
-                                        maxWidth: 40,
+                                        // Header: "Map",
+                                        maxWidth: 30,
                                         Cell: row => (
                                             <Button
                                                 bsStyle="info"
@@ -150,7 +150,7 @@ class Locations extends Component {
                                         )
                                     },
                                     {
-                                        maxWidth: 40,
+                                        maxWidth: 30,
                                         Cell: row => (
                                             <Button
                                                 bsStyle="warning"
@@ -162,7 +162,7 @@ class Locations extends Component {
                                         )
                                     },
                                     {
-                                        maxWidth: 40,
+                                        maxWidth: 30,
                                         Cell: row => (
                                             <Button
                                                 bsStyle="danger"
@@ -192,9 +192,9 @@ class Locations extends Component {
                             />
 
                             {
-                                locationsStore.locations.map((location, i) => <div key={i}/>)
+                                locationsStore.locations.length ? locationsStore.locations.map((location, i) => <div key={i}/>) : null
                             }
-                        </Col>
+                        </Row>
                 }
 
                 <Col sm={6}>

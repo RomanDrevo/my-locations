@@ -1,5 +1,4 @@
-import React from 'react';
-import ResponsiveComponent from "../../../framework/components/ResponsiveComponent";
+import React, {Component} from 'react';
 import '../LocationForm.module.scss'
 import {inject, observer} from "mobx-react/index";
 import {Button, FormControl, FormGroup} from "react-bootstrap";
@@ -8,9 +7,9 @@ import Select from 'react-select';
 @inject('addLocationFormUiState', 'categoriesStore')
 
 @observer
-class AddLocationForm extends ResponsiveComponent {
+class AddLocationForm extends Component {
 
-    renderDesktop() {
+    render() {
         const {addLocationFormUiState, categoriesStore} = this.props
         const {form} = addLocationFormUiState
 
@@ -81,15 +80,6 @@ class AddLocationForm extends ResponsiveComponent {
             </form>
         );
     }
-
-    renderMobile() {
-        return (
-            <div>
-                mobile form
-            </div>
-        );
-    }
-
 }
 
 export default AddLocationForm;

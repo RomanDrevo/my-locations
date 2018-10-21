@@ -37,6 +37,9 @@ class Header extends ResponsiveComponent {
         );
     }
 
+    // renderMobile (){
+    //     return <div />
+    // }
 }
 
 export default Header;

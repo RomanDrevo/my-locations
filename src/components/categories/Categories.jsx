@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Glyphicon, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
+import {Button, Col, Glyphicon, Modal} from "react-bootstrap";
 import {inject, observer} from "mobx-react/index";
 import AddCategoryForm from "../categoryForm/addCategory/AddCategoryForm";
 import './Categories.module.scss'
@@ -7,7 +7,6 @@ import SweetAlert from 'sweetalert2-react';
 import EditCategoryForm from "../categoryForm/editCategory/EditCategoryForm";
 import loader from '../../assets/images/loading.svg'
 import ReactTable from "react-table";
-import {toJS} from 'mobx';
 
 class AddCategoryModal extends Component {
     render() {
@@ -64,7 +63,7 @@ class Categories extends Component {
         return (
             <div className="categories-wrapper">
 
-                <Col xs={12}>
+                <Col sm={12}>
                     <h1 className="">Categories</h1>
                     <Button
                         className="flex flex-column"
@@ -104,7 +103,6 @@ class Categories extends Component {
                         <Col sm={4} className="mt2">
                             <ReactTable
                                 data = { categoriesStore.transformedCategories}
-                                // resolveData={data => data.map(row => row)}
                                 columns={[
                                     {
                                         Header: "Category Name",
@@ -115,7 +113,7 @@ class Categories extends Component {
                                         maxWidth: 40,
                                         Cell: row => (
                                             <Button
-                                                bsStyle="success"
+                                                bsStyle="warning"
                                                 bsSize="xsmall"
                                                 onClick={() => categoriesStore.openUpdateCategoryModal(row.index)}
                                             >
@@ -145,34 +143,6 @@ class Categories extends Component {
                             }
                         </Col>
                 }
-
-
-                {/*{*/}
-                    {/*categoriesStore.isLoadingCategories ?*/}
-                        {/*<img src={loader} className="loader" alt="loading-spinner"/>*/}
-                        {/*:*/}
-                        {/*<Col xs={4}>*/}
-                            {/*<ListGroup className="mt3">*/}
-                                {/*{*/}
-                                    {/*categoriesStore.categories.map((category, index) =>*/}
-                                        {/*<ListGroupItem key={index} className="">*/}
-                                            {/*<div className="category">{category}</div>*/}
-                                            {/*<Button onClick={() => categoriesStore.openUpdateCategoryModal(index)}*/}
-                                                    {/*bsStyle="success" className="mr2">*/}
-                                                {/*<Glyphicon glyph="edit"/>*/}
-                                                {/*<span className="ml1">EDIT</span>*/}
-                                            {/*</Button>*/}
-                                            {/*<Button bsStyle="danger" onClick={() => categoriesStore.openDeleteSwal(index)}>*/}
-                                                {/*<Glyphicon glyph="trash"/>*/}
-                                                {/*<span className="ml1">REMOVE</span>*/}
-                                            {/*</Button>*/}
-                                        {/*</ListGroupItem>*/}
-                                    {/*)*/}
-                                {/*}*/}
-                            {/*</ListGroup>;*/}
-                        {/*</Col>*/}
-                {/*}*/}
-
             </div>
         );
     }

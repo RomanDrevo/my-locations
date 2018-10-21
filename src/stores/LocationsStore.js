@@ -14,6 +14,7 @@ export default class LocationsStore {
 
     @action clearFilter = () =>{
         this.filteredLocations = []
+        console.log('clear...')
     }
 
     @action
@@ -42,7 +43,7 @@ export default class LocationsStore {
         this.isLoadingLocations = true
 
         try {
-            const locations = JSON.parse(localStorage.getItem('locations'))
+            const locations = JSON.parse(localStorage.getItem('locations')) || []
             runInAction(() => this.locations = locations)
         }
         catch (error) {

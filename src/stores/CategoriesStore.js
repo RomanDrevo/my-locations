@@ -3,7 +3,7 @@ import {action, observable, runInAction} from 'mobx';
 
 
 export default class CategoriesStore {
-    @observable categories = JSON.parse(localStorage.getItem('categories')) || [];
+    @observable categories = [];
     @observable isDeleteSwalOpen = false;
     @observable isLoadingCategories = false;
     @observable loadCategoriesError = null;
@@ -41,7 +41,7 @@ export default class CategoriesStore {
         this.isLoadingCategories = true
 
         try{
-            const categories = JSON.parse(localStorage.getItem('categories'))
+            const categories = JSON.parse(localStorage.getItem('categories')) || []
             runInAction(()=> this.categories = categories)
             this._transformCategories()
         }
@@ -59,9 +59,10 @@ export default class CategoriesStore {
 
     _createCategory = (category) => {
         this.transformedCategories.unshift({label: category, value: 0});
+        console.log('--categories: ', this.categories)
         this.categories.unshift(category)
         localStorage.setItem('categories', JSON.stringify(this.categories));
-        // this.closeCreateNewCategoryModal()
+        this.closeCreateNewCategoryModal()
     }
 
 
