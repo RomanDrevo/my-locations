@@ -19,7 +19,7 @@ const fields = [
     {
         name: 'latitude',
         label: 'Latitude',
-        rules: 'required|numeric',
+        rules: 'required|numeric|min:-90|max: 90',
         options: {
             validateOnChange: true
         }
@@ -27,7 +27,7 @@ const fields = [
     {
         name: 'longitude',
         label: 'Longitude',
-        rules: 'required|numeric',
+        rules: 'required|numeric|min:-180|max: 180',
         options: {
             validateOnChange: true
         }

@@ -7,6 +7,8 @@ import loader from '../../assets/images/loading.svg'
 import ReactTable from "react-table";
 import EditLocationForm from "../locationForm/editLocation/EditLocationForm";
 import SweetAlert from 'sweetalert2-react';
+import MapContainer from "../map/MapContainer";
+
 
 class AddLocationModal extends Component {
 
@@ -93,6 +95,18 @@ class Locations extends Component {
     //     )
     // }
 
+    state = {
+        lat: null,
+        long: null
+    }
+
+    showLocation = (lat, lng) =>{
+        console.log(lat, lng)
+        this.setState({
+            lat, lng
+        })
+    }
+
     render() {
         const {locationsStore} = this.props
         return (
@@ -113,7 +127,7 @@ class Locations extends Component {
                     locationsStore.isLoadingLocations ?
                         <img src={loader} className="loader" alt="loading-spinner"/>
                         :
-                        <Col sm={5} className="mt2">
+                        <Col sm={6} className="mt2">
 
                             <ReactTable
                                 data={locationsStore.locations}
@@ -122,20 +136,39 @@ class Locations extends Component {
                                         Header: "Name",
                                         accessor: "locationName",
                                         style: {textAlign: "center"},
-                                        maxWidth: 100
+                                        maxWidth: 80
                                     },
                                     {
                                         Header: "Address",
                                         accessor: "address",
                                         style: {textAlign: "center"},
-                                        maxWidth: 140
+                                        maxWidth: 80
                                         // Cell: this.renderEditable
+                                    },
+                                    {
+                                        Header: "Category",
+                                        accessor: "category",
+                                        style: {textAlign: "center"},
+                                        maxWidth: 80
+                                    },
+                                    {
+                                        Header: "Map",
+                                        maxWidth: 40,
+                                        Cell: row => (
+                                            <Button
+                                                bsStyle="info"
+                                                bsSize="xsmall"
+                                                onClick={() =>(this.showLocation(row.original.latitude, row.original.longitude))}
+                                            >
+                                                <Glyphicon glyph="map-marker"/>
+                                            </Button>
+                                        )
                                     },
                                     {
                                         maxWidth: 40,
                                         Cell: row => (
                                             <Button
-                                                bsStyle="success"
+                                                bsStyle="warning"
                                                 bsSize="xsmall"
                                                 onClick={() => locationsStore.openUpdateLocationModal(row.index)}
                                             >
@@ -165,8 +198,8 @@ class Locations extends Component {
                                     return (
                                         <div style={{ padding: "0 20px 20px 20px" }}>
                                             <br />
-                                            <h5>Longitude: {row.original.longitude}</h5>
                                             <h5>Latitude: {row.original.latitude}</h5>
+                                            <h5>Longitude: {row.original.longitude}</h5>
                                             <h5>Category: {row.original.category}</h5>
                                         </div>
                                     );
@@ -216,6 +249,12 @@ class Locations extends Component {
                         </Col>
                 }
 
+                <Col sm={6}>
+                    <div className="map-wrapper">
+                        <MapContainer position={{lat: this.state.lat, lng: this.state.lng}} />
+                    </div>
+                </Col>
+
                 <SweetAlert
                     warning
                     showCancelButton={true}
@@ -241,4 +280,5 @@ class Locations extends Component {
     }
 }
 
-export default Locations;
+
+export default Locations
